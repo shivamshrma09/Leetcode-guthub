@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LeetShare - LeetCode & GitHub User Searcher</title>
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #f8fafc, #e0e7ef 90%);
+      font-family: 'Inter', Arial, sans-serif;
+      margin: 0; padding: 0; min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .navbar {
+      width: 100vw; max-width: 100%;
+      display: flex; align-items: center; justify-content: space-between;
+      background: #fff; box-shadow: 0 2px 8px rgba(44,62,80,0.07);
+      padding: 0 36px; height: 64px; position: sticky; top: 0; z-index: 10;
+    }
+    .logo { font-size: 2rem; font-weight: 800; color: #ed8936; letter-spacing: 2px; }
+    h1 { margin-top: 40px; color: #1a202c; font-size: 2.5rem; letter-spacing: 1.2px; font-weight: 800; }
+    .input-group {
+      margin: 32px 0 18px 0; display: flex; gap: 12px; flex-wrap: wrap;
+      box-shadow: 0 4px 12px rgba(50, 50, 93, 0.11);
+      padding: 12px 16px; border-radius: 12px; background: #fff; justify-content: center;
+    }
+    input[type="text"] {
+      padding: 14px 18px; font-size: 1.1rem; border-radius: 10px;
+      border: 1px solid #cbd5e0; background: #fefefe;
+      transition: border 0.3s ease; width: 220px;
+    }
+    input:focus { border: 2px solid #ed8936; outline: none; }
+    button {
+      padding: 14px 24px; font-size: 1.1rem; border-radius: 10px;
+      border: none; background: #ed8936; color: #fff; font-weight: 700;
+      cursor: pointer; transition: background 0.3s ease;
+    }
+    button:hover { background: #dd6b20; }
+    .cards-row { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; }
+    .profile-card {
+      background: #fff; border-radius: 18px;
+      box-shadow: 0 6px 20px rgba(44, 62, 80, 0.12);
+      width: 350px; min-height: 350px; padding: 30px 22px 22px 22px;
+      display: flex; flex-direction: column; align-items: center;
+      position: relative; border: 1px solid #e2e8f0; margin: 18px 0; transition: box-shadow 0.2s;
+    }
+    .profile-card img {
+      border-radius: 50%; width: 90px; height: 90px; border: 3.5px solid #ed8936;
+      margin-bottom: 10px; object-fit: cover; background: #e2e8f0; box-shadow: 0 2px 10px #ed893655;
+    }
+    .profile-card h3 { margin: 0 0 6px 0; font-size: 1.3em; color: #ed8936; }
+    .profile-card .bio { font-size: 1em; color: #4a5568; margin-bottom: 10px; font-style: italic; text-align: center; }
+    .profile-card .stats-list { width: 100%; margin: 10px 0 0 0; }
+    .profile-card .stats-list li { margin-bottom: 7px; font-size: 1.04em; color: #333; }
+    .profile-card .badge {
+      background: #ed8936; color: #fff; border-radius: 8px; padding: 4px 12px;
+      font-size: 1em; font-weight: 700; margin-top: 10px; display: inline-block;
+    }
+    .profile-card .links { margin-top: 13px; }
+    .profile-card .links a {
+      color: #3182ce; font-weight: 700; text-decoration: none; margin-right: 8px;
+      transition: color 0.2s;
+    }
+    .profile-card .links a:hover { color: #ed8936; }
+    .download-btn {
+      margin-top: 18px; background: #3182ce; color: #fff; font-size: 1rem; font-weight: 700;
+      border: none; border-radius: 7px; padding: 7px 15px; cursor: pointer;
+      box-shadow: 0 3px 10px #3182ce33; transition: background 0.2s;
+    }
+    .download-btn:hover { background: #2c5282; }
+    .error-msg { color: #d32f2f; font-weight: 600; margin: 16px 0; font-size: 1.1em; }
+    @media (max-width: 800px) { .cards-row { flex-direction: column; align-items: center; } }
+    @media (max-width: 600px) {
+      .navbar { padding: 0 10px; }
+      .logo { font-size: 1.3rem; }
+      .profile-card { width: 98vw; padding: 16px 6px 16px 6px; }
+      .profile-card img { width: 70px; height: 70px; }
+      .input-group { flex-direction: column; gap: 8px; padding: 10px 6px; }
+      input { width: 95vw; max-width: 98vw; }
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo">LeetShare</div>
+  </div>
+  <h1>LeetCode & GitHub Profile Searcher</h1>
+  <div class="input-group">
+    <input type="text" id="leetcodeUser" placeholder="LeetCode username">
+    <input type="text" id="githubUser" placeholder="GitHub username">
+    <button onclick="searchProfiles()">Search</button>
+  </div>
+  <div id="errorMsg" class="error-msg" style="display:none;"></div>
+  <div class="cards-row">
+    <!-- LeetCode Card -->
+    <div id="leetcodeCard" class="profile-card" style="display:none;">
+      <img id="leetcodeAvatar" src="https://leetcode.com/static/images/LeetCode_logo_rvs.png" alt="Avatar">
+      <h3 id="leetcodeName"></h3>
+      <div class="bio" id="leetcodeBio"></div>
+      <ul class="stats-list">
+        <li><b>Total Solved:</b> <span id="leetcodeTotalSolved"></span></li>
+        <li><b>Ranking:</b> <span id="leetcodeRanking"></span></li>
+        <li><b>Easy:</b> <span id="leetcodeEasy"></span> | <b>Medium:</b> <span id="leetcodeMedium"></span> | <b>Hard:</b> <span id="leetcodeHard"></span></li>
+        <li><b>Acceptance Rate:</b> <span id="leetcodeAcceptance"></span></li>
+        <li><b>Contribution:</b> <span id="leetcodeContribution"></span></li>
+        <li><b>Reputation:</b> <span id="leetcodeReputation"></span></li>
+      </ul>
+      <div class="badge" id="leetcodeBadge"></div>
+      <div class="links">
+        <a id="leetcodeProfileLink" href="#" target="_blank">LeetCode Profile</a>
+      </div>
+      <button class="download-btn" onclick="downloadLeetCodePDF()">Download PDF</button>
+    </div>
+    <!-- GitHub Card -->
+    <div id="githubCard" class="profile-card" style="display:none;">
+      <img id="githubAvatar" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="Avatar">
+      <h3 id="githubName"></h3>
+      <div class="bio" id="githubBio"></div>
+      <ul class="stats-list">
+        <li><b>Username:</b> <span id="githubLogin"></span></li>
+        <li><b>Followers:</b> <span id="githubFollowers"></span></li>
+        <li><b>Following:</b> <span id="githubFollowing"></span></li>
+        <li><b>Repos:</b> <span id="githubRepos"></span></li>
+      </ul>
+      <div class="links">
+        <a id="githubProfileLink" href="#" target="_blank">GitHub Profile</a>
+      </div>
+      <button class="download-btn" onclick="downloadGitHubPDF()">Download PDF</button>
+    </div>
+  </div>
+  <script>
+    let leetcodeStats = null, githubStats = null, githubAvatarUrl = null;
+
+    async function searchProfiles() {
+      const leet = document.getElementById("leetcodeUser").value.trim();
+      const git = document.getElementById("githubUser").value.trim();
+      const errorMsg = document.getElementById("errorMsg");
+      errorMsg.style.display = "none";
+      // LeetCode
+      if (leet) {
+        document.getElementById("leetcodeCard").style.display = "none";
+        try {
+          const url = `https://leetcode-stats-api.herokuapp.com/${leet}`;
+          const response = await fetch(url);
+          const data = await response.json();
+          if (data.status === "error" || !data.totalSolved) throw new Error();
+          leetcodeStats = data;
+          document.getElementById("leetcodeAvatar").src = "https://leetcode.com/static/images/LeetCode_logo_rvs.png";
+          document.getElementById("leetcodeName").textContent = data.name || leet;
+          document.getElementById("leetcodeBio").textContent = data.aboutMe || "";
+          document.getElementById("leetcodeTotalSolved").textContent = data.totalSolved;
+          document.getElementById("leetcodeRanking").textContent = data.ranking || "N/A";
+          document.getElementById("leetcodeEasy").textContent = data.easySolved;
+          document.getElementById("leetcodeMedium").textContent = data.mediumSolved;
+          document.getElementById("leetcodeHard").textContent = data.hardSolved;
+          document.getElementById("leetcodeAcceptance").textContent = data.acceptanceRate ? data.acceptanceRate + "%" : "N/A";
+          document.getElementById("leetcodeContribution").textContent = data.contributionPoints || "N/A";
+          document.getElementById("leetcodeReputation").textContent = data.reputation || "N/A";
+          let badge = "";
+          if (data.totalSolved > 1000) badge = "🔥 Pro Coder";
+          else if (data.totalSolved > 500) badge = "⭐️ Advanced";
+          else if (data.totalSolved > 200) badge = "🌟 Intermediate";
+          else if (data.totalSolved > 50) badge = "🔰 Beginner";
+          document.getElementById("leetcodeBadge").textContent = badge;
+          document.getElementById("leetcodeProfileLink").href = `https://leetcode.com/${leet}/`;
+          document.getElementById("leetcodeCard").style.display = "flex";
+        } catch {
+          errorMsg.textContent = "LeetCode user not found or API error!";
+          errorMsg.style.display = "block";
+        }
+      }
+      // GitHub
+      if (git) {
+        document.getElementById("githubCard").style.display = "none";
+        try {
+          const url = `https://api.github.com/users/${git}`;
+          const response = await fetch(url);
+          if (!response.ok) throw new Error();
+          const data = await response.json();
+          githubStats = data;
+          githubAvatarUrl = data.avatar_url;
+          document.getElementById("githubAvatar").src = data.avatar_url;
+          document.getElementById("githubName").textContent = data.name || git;
+          document.getElementById("githubBio").textContent = data.bio || "";
+          document.getElementById("githubLogin").textContent = data.login;
+          document.getElementById("githubFollowers").textContent = data.followers;
+          document.getElementById("githubFollowing").textContent = data.following;
+          document.getElementById("githubRepos").textContent = data.public_repos;
+          document.getElementById("githubProfileLink").href = data.html_url;
+          document.getElementById("githubCard").style.display = "flex";
+        } catch {
+          errorMsg.textContent = "GitHub user not found!";
+          errorMsg.style.display = "block";
+        }
+      }
+    }
+
+    // LeetCode PDF (with GitHub avatar if available)
+    async function downloadLeetCodePDF() {
+      if (!leetcodeStats) return;
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      let y = 20;
+      // Try to get GitHub avatar if available, else LeetCode logo
+      let imgData = null;
+      if (githubAvatarUrl) {
+        try {
+          const imgResp = await fetch(githubAvatarUrl);
+          const imgBlob = await imgResp.blob();
+          const reader = new FileReader();
+          reader.readAsDataURL(imgBlob);
+          await new Promise(resolve => reader.onloadend = resolve);
+          imgData = reader.result;
+        } catch {}
+      }
+      if (!imgData) {
+        const imgResp = await fetch("https://leetcode.com/static/images/LeetCode_logo_rvs.png");
+        const imgBlob = await imgResp.blob();
+        const reader = new FileReader();
+        reader.readAsDataURL(imgBlob);
+        await new Promise(resolve => reader.onloadend = resolve);
+        imgData = reader.result;
+      }
+      if (imgData) doc.addImage(imgData, 'PNG', 80, y, 50, 50);
+      y += 60;
+      doc.setFontSize(15);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(237, 137, 54);
+      doc.text("LeetCode User Stats", 15, y);
+      y += 10;
+      doc.setFontSize(13);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(44, 62, 80);
+      doc.text(`Username: ${leetcodeStats.username || ''}`, 15, y); y += 8;
+      doc.text(`Ranking: ${leetcodeStats.ranking || 'N/A'}`, 15, y); y += 8;
+      doc.text(`Total Solved: ${leetcodeStats.totalSolved}`, 15, y); y += 8;
+      doc.text(`Easy: ${leetcodeStats.easySolved}   Medium: ${leetcodeStats.mediumSolved}   Hard: ${leetcodeStats.hardSolved}`, 15, y); y += 8;
+      doc.text(`Acceptance Rate: ${leetcodeStats.acceptanceRate || 'N/A'}%`, 15, y); y += 8;
+      doc.text(`Contribution Points: ${leetcodeStats.contributionPoints || 'N/A'}`, 15, y); y += 8;
+      doc.text(`Reputation: ${leetcodeStats.reputation || 'N/A'}`, 15, y); y += 8;
+      doc.textWithLink("LeetCode Profile", 15, y, { url: `https://leetcode.com/${leetcodeStats.username}/` });
+      y += 10;
+      doc.save(`${leetcodeStats.username}-leetcode.pdf`);
+    }
+
+    // GitHub PDF
+    async function downloadGitHubPDF() {
+      if (!githubStats) return;
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      let y = 20;
+      // GitHub avatar
+      let imgData = null;
+      try {
+        const imgResp = await fetch(githubStats.avatar_url);
+        const imgBlob = await imgResp.blob();
+        const reader = new FileReader();
+        reader.readAsDataURL(imgBlob);
+        await new Promise(resolve => reader.onloadend = resolve);
+        imgData = reader.result;
+      } catch {}
+      if (imgData) doc.addImage(imgData, 'PNG', 80, y, 50, 50);
+      y += 60;
+      doc.setFontSize(15);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(49, 130, 206);
+      doc.text("GitHub User Stats", 15, y);
+      y += 10;
+      doc.setFontSize(13);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(44, 62, 80);
+      doc.text(`Name: ${githubStats.name || githubStats.login}`, 15, y); y += 8;
+      doc.text(`Username: ${githubStats.login}`, 15, y); y += 8;
+      doc.text(`Followers: ${githubStats.followers}`, 15, y); y += 8;
+      doc.text(`Following: ${githubStats.following}`, 15, y); y += 8;
+      doc.text(`Repos: ${githubStats.public_repos}`, 15, y); y += 8;
+      doc.textWithLink("GitHub Profile", 15, y, { url: githubStats.html_url });
+      y += 10;
+      doc.save(`${githubStats.login}-github.pdf`);
+    }
+  </script>
+</body>
+</html>
