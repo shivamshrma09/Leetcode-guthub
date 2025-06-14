@@ -8,26 +8,22 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    /* CSS Variables for a clean, consistent design system */
     :root {
-      --primary-orange: #FF7043; /* Brighter, more modern orange */
-      --primary-blue: #42A5F5;   /* Brighter, friendly blue */
-      --secondary-purple: #9575CD; /* Accent color */
-      --text-dark: #263238; /* Dark charcoal for primary text */
-      --text-medium: #546E7A; /* Medium gray for secondary text */
-      --text-light: #ECEFF1; /* Light gray for subtle elements */
+      --primary-orange: #FF7043;
+      --primary-blue: #42A5F5;
+      --secondary-purple: #9575CD;
+      --text-dark: #263238;
+      --text-medium: #546E7A;
+      --text-light: #ECEFF1;
       --white: #FFFFFF;
-      --off-white: #F9FAFB; /* Slightly off-white background */
+      --off-white: #F9FAFB;
       --border-light: #E0E0E0;
       --shadow-color: rgba(0, 0, 0, 0.1);
       --gradient-start: #ECEFF1;
       --gradient-end: #CFD8DC;
-
-      /* Font Families */
       --font-heading: 'Poppins', sans-serif;
       --font-body: 'Lato', sans-serif;
     }
-
     body {
       background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
       font-family: var(--font-body);
@@ -38,29 +34,26 @@
       flex-direction: column;
       align-items: center;
       color: var(--text-dark);
-      line-height: 1.7; /* Improved readability */
-      overflow-x: hidden; /* Prevent horizontal scroll */
+      line-height: 1.7;
+      overflow-x: hidden;
     }
-
-    /* Navbar */
     .navbar {
       width: 100%;
       display: flex;
       align-items: center;
-      justify-content: center; /* Center content in navbar */
+      justify-content: center;
       background: var(--white);
       box-shadow: 0 4px 15px var(--shadow-color);
       padding: 0 20px;
-      height: 70px; /* Slightly taller */
+      height: 70px;
       position: sticky;
       top: 0;
       z-index: 1000;
       border-bottom: 1px solid var(--border-light);
     }
-
     .logo {
       font-family: var(--font-heading);
-      font-size: 2.5rem; /* Larger, more impactful logo */
+      font-size: 2.5rem;
       font-weight: 800;
       color: var(--primary-orange);
       letter-spacing: 3px;
@@ -70,14 +63,12 @@
     .logo:hover {
       transform: scale(1.03);
     }
-
-    /* Main Heading */
     h1 {
       font-family: var(--font-heading);
       margin-top: 60px;
       margin-bottom: 40px;
       color: var(--text-dark);
-      font-size: 3.2rem; /* Larger and more prominent */
+      font-size: 3.2rem;
       font-weight: 700;
       letter-spacing: 1.8px;
       text-align: center;
@@ -85,47 +76,42 @@
       padding: 0 20px;
       max-width: 800px;
     }
-
-    /* Input Group */
     .input-group {
-      margin-bottom: 50px; /* More space below input group */
+      margin-bottom: 50px;
       display: flex;
-      gap: 18px; /* More space between inputs/button */
+      gap: 18px;
       flex-wrap: wrap;
       background: var(--white);
       box-shadow: 0 8px 25px var(--shadow-color);
-      padding: 25px 35px; /* More padding */
-      border-radius: 20px; /* Softer, modern corners */
+      padding: 25px 35px;
+      border-radius: 20px;
       justify-content: center;
-      align-items: center; /* Vertically align items */
-      max-width: 850px; /* Wider input group */
+      align-items: center;
+      max-width: 850px;
       width: 90%;
       border: 1px solid var(--border-light);
     }
-
     input[type="text"] {
-      padding: 16px 22px; /* More generous padding */
+      padding: 16px 22px;
       font-size: 1.15rem;
       border-radius: 12px;
-      border: 2px solid var(--border-light); /* Thicker, softer border */
+      border: 2px solid var(--border-light);
       background: var(--off-white);
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
-      width: 280px; /* A bit wider for inputs */
+      width: 280px;
       flex-grow: 1;
       box-sizing: border-box;
       color: var(--text-dark);
       font-family: var(--font-body);
     }
-
     input:focus {
       border-color: var(--primary-orange);
       outline: none;
-      box-shadow: 0 0 0 4px rgba(255, 112, 67, 0.2); /* Orange glow */
+      box-shadow: 0 0 0 4px rgba(255, 112, 67, 0.2);
     }
-
     button {
-      padding: 16px 30px; /* More padding */
-      font-size: 1.2rem; /* Larger text for button */
+      padding: 16px 30px;
+      font-size: 1.2rem;
       border-radius: 12px;
       border: none;
       background: var(--primary-orange);
@@ -134,49 +120,42 @@
       font-family: var(--font-heading);
       cursor: pointer;
       transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-      box-shadow: 0 6px 15px rgba(255, 112, 67, 0.3); /* Button shadow */
+      box-shadow: 0 6px 15px rgba(255, 112, 67, 0.3);
     }
-
     button:hover {
-      background: #E65100; /* Darker orange on hover */
-      transform: translateY(-3px); /* More pronounced lift */
+      background: #E65100;
+      transform: translateY(-3px);
       box-shadow: 0 8px 20px rgba(255, 112, 67, 0.4);
     }
     button:active {
-      transform: translateY(0); /* Press effect */
+      transform: translateY(0);
       box-shadow: 0 4px 10px rgba(255, 112, 67, 0.2);
     }
-
-    /* Error Message */
     .error-msg {
-      color: #D32F2F; /* Standard error red */
+      color: #D32F2F;
       font-weight: 700;
       margin: 25px 0;
       font-size: 1.2em;
       text-align: center;
       padding: 0 20px;
     }
-
-    /* Card Row */
     .cards-row {
       display: flex;
-      gap: 40px; /* More space between cards */
+      gap: 40px;
       flex-wrap: wrap;
       justify-content: center;
-      margin-bottom: 80px; /* More space at the bottom */
+      margin-bottom: 80px;
       padding: 0 20px;
-      width: 100%; /* Ensure row takes full width */
-      max-width: 1200px; /* Limit overall width of cards */
+      width: 100%;
+      max-width: 1200px;
     }
-
-    /* Profile Card */
     .profile-card {
       background: var(--white);
-      border-radius: 25px; /* Even more rounded, softer corners */
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Deeper shadow */
-      width: 400px; /* Wider cards */
-      min-height: 450px; /* Consistent, slightly taller height */
-      padding: 40px 30px; /* More internal padding */
+      border-radius: 25px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      width: 400px;
+      min-height: 450px;
+      padding: 40px 30px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -185,34 +164,30 @@
       margin: 20px 0;
       transition: box-shadow 0.3s ease, transform 0.3s ease;
       overflow: hidden;
-      justify-content: space-between; /* Distribute space */
+      justify-content: space-between;
     }
-
     .profile-card:hover {
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25); /* More pronounced hover shadow */
-      transform: translateY(-8px); /* Clearer lift on hover */
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+      transform: translateY(-8px);
     }
-
     .profile-card img {
       border-radius: 50%;
-      width: 110px; /* Larger avatar */
+      width: 110px;
       height: 110px;
-      border: 5px solid var(--primary-orange); /* Thicker, vibrant border */
-      margin-bottom: 20px; /* More space */
+      border: 5px solid var(--primary-orange);
+      margin-bottom: 20px;
       object-fit: cover;
       background: var(--off-white);
-      box-shadow: 0 4px 15px rgba(255, 112, 67, 0.4); /* Stronger glow */
+      box-shadow: 0 4px 15px rgba(255, 112, 67, 0.4);
     }
     .profile-card.github img {
-      border-color: var(--primary-blue); /* GitHub avatar border color */
+      border-color: var(--primary-blue);
       box-shadow: 0 4px 15px rgba(66, 165, 245, 0.4);
     }
-
-
     .profile-card h3 {
       font-family: var(--font-heading);
       margin: 0 0 10px 0;
-      font-size: 1.8em; /* Larger name */
+      font-size: 1.8em;
       color: var(--text-dark);
       text-align: center;
     }
@@ -222,8 +197,6 @@
     .profile-card.github h3 {
       color: var(--primary-blue);
     }
-
-
     .profile-card .bio {
       font-size: 1.05em;
       color: var(--text-medium);
@@ -232,105 +205,94 @@
       text-align: center;
       max-width: 95%;
     }
-
     .profile-card .stats-list {
       width: 100%;
       margin: 20px 0 0 0;
       list-style: none;
       padding: 0;
     }
-
     .profile-card .stats-list li {
-      margin-bottom: 12px; /* More space between list items */
+      margin-bottom: 12px;
       font-size: 1.08em;
       color: var(--text-dark);
       display: flex;
-      align-items: center; /* Align icon and text */
-      gap: 10px; /* Space between icon and text */
+      align-items: center;
+      gap: 10px;
     }
     .profile-card .stats-list li i {
-      color: var(--secondary-purple); /* Icon color */
-      width: 20px; /* Fixed width for icons */
+      color: var(--secondary-purple);
+      width: 20px;
       text-align: center;
     }
-
     .profile-card .stats-list li b {
-      color: var(--text-dark); /* Bold labels remain dark */
-      min-width: 140px; /* More space for labels */
+      color: var(--text-dark);
+      min-width: 140px;
       display: inline-block;
       font-weight: 700;
     }
-
     .profile-card .badge {
-      background: var(--secondary-purple); /* New badge color */
+      background: var(--secondary-purple);
       color: var(--white);
-      border-radius: 15px; /* Softer badge corners */
-      padding: 8px 20px; /* More padding */
+      border-radius: 15px;
+      padding: 8px 20px;
       font-size: 1.1em;
       font-weight: 700;
       font-family: var(--font-heading);
-      margin-top: 25px; /* More space */
+      margin-top: 25px;
       display: inline-block;
       box-shadow: 0 3px 10px rgba(149, 117, 205, 0.3);
     }
-
     .profile-card .links {
-      margin-top: 25px; /* More space */
+      margin-top: 25px;
       display: flex;
-      gap: 20px; /* More space between links */
-      flex-wrap: wrap; /* Allow links to wrap */
+      gap: 20px;
+      flex-wrap: wrap;
       justify-content: center;
     }
-
     .profile-card .links a {
       color: var(--primary-blue);
       font-weight: 700;
       text-decoration: none;
       transition: color 0.2s ease, transform 0.2s ease;
       position: relative;
-      padding-bottom: 5px; /* Space for underline */
+      padding-bottom: 5px;
       font-family: var(--font-heading);
     }
-
     .profile-card .links a::after {
       content: '';
       position: absolute;
       width: 0;
-      height: 3px; /* Thicker underline */
+      height: 3px;
       display: block;
       margin-top: 5px;
-      left: 50%; /* Start from center */
-      transform: translateX(-50%); /* Center the underline */
-      background: var(--primary-orange); /* Orange underline for all links */
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary-orange);
       transition: width 0.3s ease;
     }
-
     .profile-card .links a:hover::after {
       width: 100%;
     }
-
     .profile-card .links a:hover {
-      color: #2196F3; /* Darker blue on hover */
+      color: #2196F3;
       transform: translateY(-2px);
     }
-
     .download-btn {
-      margin-top: 30px; /* More space above button */
+      margin-top: 30px;
       background: var(--primary-blue);
       color: var(--white);
       font-size: 1.05rem;
       font-weight: 700;
       border: none;
-      border-radius: 10px; /* Softer corners */
-      padding: 12px 25px; /* More padding */
+      border-radius: 10px;
+      padding: 12px 25px;
       cursor: pointer;
       box-shadow: 0 5px 15px rgba(66, 165, 245, 0.3);
       transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
       font-family: var(--font-heading);
     }
-
     .download-btn:hover {
-      background: #1976D2; /* Darker blue on hover */
+      background: #1976D2;
       transform: translateY(-3px);
       box-shadow: 0 7px 20px rgba(66, 165, 245, 0.4);
     }
@@ -338,11 +300,7 @@
       transform: translateY(0);
       box-shadow: 0 3px 10px rgba(66, 165, 245, 0.2);
     }
-
-    /* Specific GitHub Styles */
-    .github-icon { color: #212121; /* Dark icon for GitHub */ }
-
-    /* Responsive Adjustments */
+    .github-icon { color: #212121; }
     @media (max-width: 992px) {
       h1 { font-size: 2.8rem; }
       .input-group { gap: 15px; padding: 20px 25px; }
@@ -352,7 +310,6 @@
       .profile-card img { width: 100px; height: 100px; }
       .profile-card h3 { font-size: 1.6em; }
     }
-
     @media (max-width: 768px) {
       .navbar { height: 60px; }
       .logo { font-size: 2rem; letter-spacing: 2px; }
@@ -374,7 +331,7 @@
         width: 90%;
         max-width: 380px;
         padding: 30px 20px;
-        min-height: unset; /* Allow height to adjust */
+        min-height: unset;
       }
       .profile-card img { width: 90px; height: 90px; }
       .profile-card h3 { font-size: 1.5em; }
@@ -383,7 +340,6 @@
       .profile-card .links { gap: 15px; }
       .download-btn { font-size: 1rem; padding: 10px 20px; }
     }
-
     @media (max-width: 480px) {
       .navbar { padding: 0 10px; height: 50px; }
       .logo { font-size: 1.6rem; letter-spacing: 1.5px; }
@@ -463,26 +419,20 @@
   </div>
   <script>
     let leetcodeStats = null, githubStats = null, githubAvatarUrl = null;
-
     async function searchProfiles() {
       const leet = document.getElementById("leetcodeUser").value.trim();
       const git = document.getElementById("githubUser").value.trim();
       const errorMsg = document.getElementById("errorMsg");
       errorMsg.style.display = "none";
-      
-      // Reset card displays
       document.getElementById("leetcodeCard").style.display = "none";
       document.getElementById("githubCard").style.display = "none";
-
-      // LeetCode Search
       if (leet) {
         try {
           const url = `https://leetcode-stats-api.herokuapp.com/${leet}`;
           const response = await fetch(url);
           const data = await response.json();
           if (data.status === "error" || !data.totalSolved) throw new Error("LeetCode user not found or API error!");
-          leetcodeStats = { ...data, username: leet }; // Store username as well for PDF
-          
+          leetcodeStats = { ...data, username: leet };
           document.getElementById("leetcodeAvatar").src = "https://leetcode.com/static/images/LeetCode_logo_rvs.png";
           document.getElementById("leetcodeName").textContent = data.name || leet;
           document.getElementById("leetcodeBio").textContent = data.aboutMe || "No bio available.";
@@ -494,27 +444,22 @@
           document.getElementById("leetcodeAcceptance").textContent = data.acceptanceRate ? `${data.acceptanceRate}%` : "N/A";
           document.getElementById("leetcodeContribution").textContent = data.contributionPoints || "N/A";
           document.getElementById("leetcodeReputation").textContent = data.reputation || "N/A";
-          
           let badgeText = "";
           if (data.totalSolved > 1500) badgeText = "👑 Grandmaster";
           else if (data.totalSolved > 1000) badgeText = "🔥 Master Coder";
           else if (data.totalSolved > 500) badgeText = "⭐️ Advanced";
           else if (data.totalSolved > 200) badgeText = "🌟 Intermediate";
           else if (data.totalSolved > 50) badgeText = "🔰 Beginner";
-          else badgeText = "Newbie"; // Default badge for less than 50
+          else badgeText = "Newbie";
           document.getElementById("leetcodeBadge").textContent = badgeText;
-
           document.getElementById("leetcodeProfileLink").href = `https://leetcode.com/${leet}/`;
           document.getElementById("leetcodeCard").style.display = "flex";
         } catch (error) {
           errorMsg.textContent = error.message || "LeetCode user not found or API error!";
           errorMsg.style.display = "block";
-          leetcodeStats = null; // Clear stats if error
+          leetcodeStats = null;
         }
       }
-
-
-          // GitHub Search
       if (git) {
         try {
           const url = `https://api.github.com/users/${git}`;
@@ -522,8 +467,7 @@
           if (!response.ok) throw new Error("GitHub user not found!");
           const data = await response.json();
           githubStats = data;
-          githubAvatarUrl = data.avatar_url; // Store avatar URL for PDF
-          
+          githubAvatarUrl = data.avatar_url;
           document.getElementById("githubAvatar").src = data.avatar_url;
           document.getElementById("githubName").textContent = data.name || git;
           document.getElementById("githubBio").textContent = data.bio || "No bio available.";
@@ -534,23 +478,19 @@
           document.getElementById("githubCompany").textContent = data.company || "N/A";
           document.getElementById("githubLocation").textContent = data.location || "N/A";
           document.getElementById("githubJoined").textContent = data.created_at ? new Date(data.created_at).toLocaleDateString() : "N/A";
-
           document.getElementById("githubProfileLink").href = data.html_url;
           document.getElementById("githubCard").style.display = "flex";
         } catch (error) {
           errorMsg.textContent = error.message || "GitHub user not found!";
           errorMsg.style.display = "block";
-          githubStats = null; // Clear stats if error
+          githubStats = null;
         }
       }
-
       if (!leet && !git) {
           errorMsg.textContent = "Please enter at least one username!";
           errorMsg.style.display = "block";
       }
     }
-
-    // Helper function to convert image to data URL
     async function getImageDataUrl(url) {
         try {
             const response = await fetch(url);
@@ -566,35 +506,29 @@
             return null;
         }
     }
-
-    // LeetCode PDF (with GitHub avatar if available)
     async function downloadLeetCodePDF() {
       if (!leetcodeStats) return;
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
       let y = 20;
-      
       let imgData = null;
       if (githubAvatarUrl) {
         imgData = await getImageDataUrl(githubAvatarUrl);
       }
-      if (!imgData) { // Fallback to LeetCode logo if GitHub avatar fails or isn't available
+      if (!imgData) {
         imgData = await getImageDataUrl("https://leetcode.com/static/images/LeetCode_logo_rvs.png");
       }
-
       if (imgData) doc.addImage(imgData, 'PNG', 80, y, 50, 50);
       y += 60;
-      doc.setFontSize(22); /* Larger PDF title */
+      doc.setFontSize(22);
       doc.setFont('helvetica', 'bold');
-      doc.setTextColor(255, 112, 67); /* Primary orange */
+      doc.setTextColor(255, 112, 67);
       doc.text("LeetCode User Profile", 15, y);
       y += 15;
-
       doc.setFontSize(13);
       doc.setFont('helvetica', 'normal');
-      doc.setTextColor(38, 50, 56); /* Dark text */
-
-      doc.text(`Name: ${leetcodeStats.name || leetcodeStats.username}`, 15, y); y += 8;
+      doc.setTextColor(38, 50, 56);
+doc.text(`Name: ${leetcodeStats.name || leetcodeStats.username}`, 15, y); y += 8;
       doc.text(`Username: ${leetcodeStats.username || 'N/A'}`, 15, y); y += 8;
       doc.text(`About Me: ${leetcodeStats.aboutMe || 'N/A'}`, 15, y); y += 8;
       doc.text(`Global Ranking: ${leetcodeStats.ranking || 'N/A'}`, 15, y); y += 8;
@@ -605,37 +539,30 @@
       doc.text(`Acceptance Rate: ${leetcodeStats.acceptanceRate || 'N/A'}%`, 15, y); y += 8;
       doc.text(`Contribution Points: ${leetcodeStats.contributionPoints || 'N/A'}`, 15, y); y += 8;
       doc.text(`Reputation: ${leetcodeStats.reputation || 'N/A'}`, 15, y); y += 8;
-      
       const leetcodeBadge = document.getElementById("leetcodeBadge").textContent;
       if (leetcodeBadge) {
         doc.text(`Achievement Badge: ${leetcodeBadge}`, 15, y); y += 8;
       }
-
       doc.textWithLink("View LeetCode Profile", 15, y, { url: `https://leetcode.com/${leetcodeStats.username}/` });
       y += 10;
       doc.save(`${leetcodeStats.username}-leetcode-profile.pdf`);
     }
-
-    // GitHub PDF
     async function downloadGitHubPDF() {
       if (!githubStats) return;
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
       let y = 20;
-      
       let imgData = await getImageDataUrl(githubStats.avatar_url);
       if (imgData) doc.addImage(imgData, 'PNG', 80, y, 50, 50);
       y += 60;
       doc.setFontSize(22);
       doc.setFont('helvetica', 'bold');
-      doc.setTextColor(66, 165, 245); /* Primary blue */
+      doc.setTextColor(66, 165, 245);
       doc.text("GitHub User Profile", 15, y);
       y += 15;
-
       doc.setFontSize(13);
       doc.setFont('helvetica', 'normal');
       doc.setTextColor(38, 50, 56);
-
       doc.text(`Name: ${githubStats.name || githubStats.login}`, 15, y); y += 8;
       doc.text(`Username: ${githubStats.login}`, 15, y); y += 8;
       doc.text(`Bio: ${githubStats.bio || 'N/A'}`, 15, y); y += 8;
@@ -645,8 +572,6 @@
       doc.text(`Company: ${githubStats.company || 'N/A'}`, 15, y); y += 8;
       doc.text(`Location: ${githubStats.location || 'N/A'}`, 15, y); y += 8;
       doc.text(`Joined GitHub: ${githubStats.created_at ? new Date(githubStats.created_at).toLocaleDateString() : 'N/A'}`, 15, y); y += 8;
-
-
       doc.textWithLink("View GitHub Profile", 15, y, { url: githubStats.html_url });
       y += 10;
       doc.save(`${githubStats.login}-github-profile.pdf`);
